@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class CaesarCipher {
@@ -8,77 +7,69 @@ public class CaesarCipher {
         String cadenadetexto = scanner.nextLine();
         cadenadetexto = cadenadetexto.toUpperCase();
 
-        char[] abecedario = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-        char[] numeral = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-
         System.out.println("CIFRAR --> 1");
         System.out.println("DESCIFRAR --> 2");
         int opcion = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); // Limpiar el buffer
 
-        char[] resultado;
         if (opcion == 1) {
-            resultado = Encriptar(cadenadetexto, abecedario, numeral);
-            System.out.println("EL TEXTO ENCRIPTADO ES: " + Arrays.toString(resultado));
+            encriptar(cadenadetexto);
         } else if (opcion == 2) {
-            resultado = Desencriptar(cadenadetexto, abecedario, numeral);
-            System.out.println("EL TEXTO DESCIFRADO ES: " + Arrays.toString(resultado));
+            desencriptar(cadenadetexto);
         } else {
             System.out.println("Opción no válida.");
         }
     }
 
-    public static char[] Encriptar(String cadenadetexto, char[] abecedario, char[] numeral) {
-        char[] arraycadena = cadenadetexto.toCharArray();
+    public static void encriptar(String cadenadetexto) {
+        String encriptado = "";
 
-        for (int i = 0; i < arraycadena.length; i++) {
-            boolean modificado = false;
+        for (int i = 0; i < cadenadetexto.length(); i++) {
+            char caracter = cadenadetexto.charAt(i);
 
-            // Procesa las letras (A-Z)
-            for (int j = 0; j < abecedario.length; j++) {
-                if (arraycadena[i] == abecedario[j]) {
-                    arraycadena[i] = abecedario[(j + 1) % abecedario.length];
-                    modificado = true;
+            if (caracter >= 'A' && caracter <= 'Z') { // Letras
+                if (caracter == 'Z') {
+                    encriptado += 'A';
+                } else {
+                    encriptado += (char) (caracter + 1);
                 }
-            }
-
-            // Procesa los números (0-9)
-            if (!modificado) {
-                for (int p = 0; p < numeral.length; p++) {
-                    if (arraycadena[i] == numeral[p]) {
-                        arraycadena[i] = numeral[(p + 1) % numeral.length];
-                    }
+            } else if (caracter >= '0' && caracter <= '9') { // Números
+                if (caracter == '9') {
+                    encriptado += '0';
+                } else {
+                    encriptado += (char) (caracter + 1);
                 }
+            } else {
+                encriptado += caracter; // Otros caracteres no se cifran
             }
         }
 
-        return arraycadena;
+        System.out.println("EL MENSAJE CIFRADO ES: " + encriptado);
     }
 
-    public static char[] Desencriptar(String cadenadetexto, char[] abecedario, char[] numeral) {
-        char[] arraycadena = cadenadetexto.toCharArray();
+    public static void desencriptar(String cadenadetexto) {
+        String desencriptado = "";
 
-        for (int i = 0; i < arraycadena.length; i++) {
-            boolean modificado = false;
+        for (int i = 0; i < cadenadetexto.length(); i++) {
+            char caracter = cadenadetexto.charAt(i);
 
-            // Procesa las letras (A-Z)
-            for (int j = 0; j < abecedario.length; j++) {
-                if (arraycadena[i] == abecedario[j]) {
-                    arraycadena[i] = abecedario[(j - 1 + abecedario.length) % abecedario.length];
-                    modificado = true;
+            if (caracter >= 'A' && caracter <= 'Z') { // Letras
+                if (caracter == 'A') {
+                    desencriptado += 'Z';
+                } else {
+                    desencriptado += (char) (caracter - 1);
                 }
-            }
-
-            // Procesa los números (0-9)
-            if (!modificado) {
-                for (int p = 0; p < numeral.length; p++) {
-                    if (arraycadena[i] == numeral[p]) {
-                        arraycadena[i] = numeral[(p - 1 + numeral.length) % numeral.length];
-                    }
+            } else if (caracter >= '0' && caracter <= '9') { // Números
+                if (caracter == '0') {
+                    desencriptado += '9';
+                } else {
+                    desencriptado += (char) (caracter - 1);
                 }
+            } else {
+                desencriptado += caracter; // Otros caracteres no
             }
         }
 
-        return arraycadena;
+        System.out.println("EL MENSAJE DESCIFRADO ES: " + desencriptado);
     }
 }
