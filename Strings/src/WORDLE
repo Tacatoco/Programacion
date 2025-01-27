@@ -1,0 +1,93 @@
+package ARRAYS;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class WORDLE {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        bienvenida();
+        int elecusu = scanner.nextInt();
+        bucle(elecusu);
+
+        boolean finaljuego = juegogeneral();
+
+        if (finaljuego) {
+            System.out.println("HAS GANADO");
+        } else {
+            System.out.println("HAS PERDIDO");
+        }
+    }
+
+    public static void bienvenida() {
+        System.out.println("BIENVENIDOS AL JUEGO, VAMOS A EMPEZAR");
+        System.out.println("PARA EMPEZAR PULSA 1");
+    }
+
+    public static void bucle(int elecusu) {
+        Scanner scanner = new Scanner(System.in);
+        boolean compwhile = false;
+
+        while (!compwhile) {
+            if (elecusu != 1) {
+                System.out.println("ELECCION EQUIVOCADA");
+                elecusu = scanner.nextInt();
+            } else {
+                compwhile = true;
+            }
+        }
+    }
+
+    public static char[] pedirpalabro() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("INTRODUCE LA PALABRA");
+        String palabrousu = scanner.next();
+        palabrousu = palabrousu.toUpperCase();
+
+        return palabrousu.toCharArray();
+    }
+
+    public static boolean juegogeneral() {
+        boolean compwhile = false;
+        int contadorintentos = 5;
+        Scanner scanner = new Scanner(System.in);
+        char[] palabrafinal = pedirpalabro();
+        char[] visible = new char[palabrafinal.length];
+
+        Arrays.fill(visible, '_');
+
+        while (!compwhile) {
+            System.out.println("INTRODUCE LA POSIBLE PALABRA");
+            System.out.println("FIJATE EN LOS GUIONES, CADA UNO ES UNA LETRA");
+            System.out.println(visible);
+            String palabraintento = scanner.next();
+            char[] intento = palabraintento.toUpperCase().toCharArray();
+
+            if (contadorintentos == 0) {
+                compwhile = true;
+                return false;
+            } else {
+                if (intento.length != palabrafinal.length){
+                    contadorintentos--;
+                    System.out.println(visible);
+                }
+                if (Arrays.equals(intento, palabrafinal)) {
+                    compwhile = true;
+                    return true;
+                } else {
+                    for (int i = 0; i < palabrafinal.length; i++) {
+                        if (intento[i] == palabrafinal[i]) {
+                            visible[i] = intento[i];
+                        } else if (new String(palabrafinal).contains(String.valueOf(intento[i]))) {
+                            visible[i] = '*';
+                        }
+                    }
+
+                    contadorintentos--;
+                    System.out.println("TE QUEDAN " + contadorintentos + " INTENTOS");
+                }
+            }
+        }
+        return false;
+    }
+}
