@@ -1,0 +1,110 @@
+import javax.swing.*;
+import java.util.Random;
+
+public class Juegorol {
+    public static void main(String[] args) {
+
+        Hero Jugador1 = new Hero("TORERO", 1, 100, 150, 0, 50, 25, 80);
+
+
+generarenemigos();
+
+
+
+
+
+
+
+    }
+
+
+
+
+    public static void generarenemigos(){
+        Random random = new Random();
+        Hero Goblin = new Hero("GOBLIN", 1, 30, 50, 0, 25, 25, 50);
+        Hero Bandido = new Hero("BANDIDO", 1, 60, 80, 0, 35, 30, 40);
+        Hero Esqueleto = new Hero("ESQUELETO", 1, 30, 40, 0, 20, 20, 25);
+
+        int[] Numenemigos = new int[]{1,2,3};
+        int numfinalenemigos = random.nextInt(3) + 1;
+
+        Hero[] Queenemigos = new Hero[]{Goblin, Bandido, Esqueleto};
+        Hero[] enemigo = new Hero[numfinalenemigos];
+        for (int i = 0; i < numfinalenemigos; i++){
+            enemigo[i]=Queenemigos[random.nextInt(Queenemigos.length)];
+        }
+        System.out.println("HAN APARECIDO ENEMIGOS!!!");
+
+        for (int i = 0; i < enemigo.length; i++){
+            System.out.println(enemigo[i].getNombreheroe());
+        }
+
+    }
+
+
+    public static void atacar(Hero Jugador1, Hero[] Enemigos){
+        boolean compwhile = false;
+        Random random = new Random();
+        System.out.println("EMPIEZAN LAS RONDAS DE ATAQUE");
+
+        while (!compwhile){
+            if (Jugador1.getHealth() <= 0){
+                compwhile = false;
+            }
+            else {
+                int accion = random.nextInt(1000);
+
+                if (accion == 999){
+                    System.out.println("EL JUGADOR DESCANSA Y SE RECUPERA POR COMPLETO");
+                    if (Jugador1.getHealth() >= Jugador1.getMaxhealth()){
+                        System.out.println("SE HA RECUPERADO POR COMPLETO");
+                    }
+                    else if (Jugador1.getHealth() <= Jugador1.getMaxhealth()){
+                        System.out.println("SE HA RECUPERADO POR COMPLETO");
+                        Jugador1.setHealth(Jugador1.getMaxhealth());
+                    }
+                }
+                else if (accion >= 900) {
+                    System.out.println("EL JUGADOR HA ENCONTRADO UNA POCIÓN Y RECUPERA ALGO DE SALUD");
+                    if (Jugador1.getHealth() >= Jugador1.getMaxhealth()){
+                        System.out.println("NO PUEDES RECUPERAR MÁS VIDA!!!");
+                    }
+                    else if (Jugador1.getHealth() <= Jugador1.getMaxhealth()){
+                        System.out.println("EL JUGADOR HA RECUPERADO ALGO DE SALUD");
+                        Jugador1.setHealth(Jugador1.getHealth() + 20);
+                    }
+                }
+
+                else {
+                    int aquienatako = random.nextInt(Enemigos.length);
+
+                    System.out.println("EL JUGADOR ATACA A EL " + Enemigos[aquienatako].getNombreheroe());
+                    Jugador1.attack(Enemigos[aquienatako]);
+                    if (Enemigos[aquienatako].getHealth() <= 0){
+                        System.out.println("EL " + Enemigos[aquienatako].getNombreheroe() + " HA SIDO DERROTADO");
+                        for (int i = 0; i < Enemigos.length; i++) {
+                            Enemigos[i]=null;
+                        }
+                    }
+
+
+
+                }
+
+
+
+
+            }
+        }
+
+
+
+
+
+    }
+
+
+
+
+}
