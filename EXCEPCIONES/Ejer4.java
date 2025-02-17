@@ -10,32 +10,36 @@ public class Ejer4 {
         Random random = new Random();
         boolean compwhile = false;
 
-        int tamano = random.nextInt(100);
-        int[] Array = new int[tamano];
+        try {
+            int tamano = random.nextInt(100);
+            int[] Array = new int[tamano];
 
-        for (int i = 0; i < Array.length; i++) {
-            int valores = random.nextInt(10);
-            Array[i] = valores;
-        }
+            for (int i = 0; i < Array.length; i++) {
+                int valores = random.nextInt(10);
+                Array[i] = valores;
+            }
+
+
 
         while (!compwhile) {
             System.out.println("INTRODUCE UNA POSICION DEL ARRAY QUE QUIERAS MOSTRAR");
             System.out.println("INSERTA UN NUMERO NEGATIVO PARA SALIR");
-            try {
-                int elecusu = scanner.nextInt();
-                if (elecusu < 0){
-                    compwhile = true;
-                }
-                System.out.println(Array[elecusu]);
+
+            int elecusu = scanner.nextInt();
+            if (elecusu < 0) {
+                compwhile = true;
             }
+            System.out.println(Array[elecusu]);
+        }
+        }
 
             catch (ArrayIndexOutOfBoundsException ex){
-                System.out.println(ex);
+                System.out.println(ex.getMessage());
             }
             catch (InputMismatchException ex){
-                System.out.println(ex);
+                System.out.println(ex.getMessage());
             }
         }
 
     }
-}
+

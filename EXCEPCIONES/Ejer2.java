@@ -16,10 +16,10 @@ public class Ejer2 {
             System.out.println(num1/num2);
         }
         catch (ArithmeticException ex1){
-            System.out.println(ex1);
+            System.out.println(ex1.getMessage());
         }
         catch (InputMismatchException ex2){
-            System.out.println(ex2);
+            System.out.println(ex2.getMessage());
         }
 
 

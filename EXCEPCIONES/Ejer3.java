@@ -8,7 +8,7 @@ public class Ejer3 {
     public static void main(String[] args) {
         System.out.println("INTRODUCE DOBLES");
         Scanner sc = new Scanner(System.in);
-       double[] Array = new double[4];
+       double[] Array = new double[5];
 
         for (int i = 0; i < Array.length; i++) {
             try {
@@ -17,8 +17,11 @@ public class Ejer3 {
                 System.out.println(Array[i]);
             }
             catch (InputMismatchException ex){
-                System.out.println(ex);
+                System.out.println(ex.getMessage());
                 sc.next();
+            }
+            catch (IndexOutOfBoundsException ex){
+                System.out.println(ex.getMessage());
             }
         }
 

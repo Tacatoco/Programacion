@@ -13,7 +13,7 @@ public class Ejer1 {
             System.out.println();
         }
         catch (InputMismatchException ex){
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
         }
 
 
