@@ -1,41 +1,26 @@
 package EjerciciosFicheros;
 
+import com.sun.jdi.Value;
+
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Scanner;
 
 public class B6 {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.println("QUE NÚMERO QUIERES INTRODUCIR");
-        int numusu = sc.nextInt();
+        String numusu = sc.next();
 
-        String rutapi = "./Documentos/pi-million.txt";
+        String rutapi = "C:\\Users\\Usuario\\IdeaProjects\\FICHEROSJAVA\\Documentos\\pi-million.txt";
+        String piString = Files.readString(Path.of(rutapi));
 
-        try (BufferedReader archivo = new BufferedReader(new FileReader(rutapi))) {
-            ArrayList<Integer> numerostring = new ArrayList<>();
-            ArrayList<Integer> numerousu = new ArrayList<>();
-            int caracter, caracter2;
-
-            while ((caracter = archivo.read()) != -1) {
-                numerostring.add(caracter);
-            }
-
-            for (int i = 0; i < String.valueOf(numusu).length(); i++) {
-            numerousu.add((int) String.valueOf(numusu).charAt(i));
-
-
-
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (piString.contains(numusu)){
+            System.out.println("LOS NUMEROS SE ENCUENTRAN EN EL ARCHIVO");
         }
-
-
-
-
-
+        else System.out.println("LOS NÚMEROS NO SE ENCUENTRAN EN EL ARCHIVO");
 
     }
 }
