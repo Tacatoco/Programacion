@@ -9,43 +9,51 @@ public class MainFunko {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String rutafunko = "Documentos/funkos.csv";  // Ruta del archivo CSV
+        String rutafunko = "C:\\Users\\Usuario\\IdeaProjects\\FICHEROSJAVA\\Documentos\\funkos.csv";  // Ruta del archivo CSV
         List<Funko> funkos = new ArrayList<>();
+        boolean compwhile = false;
 
         loadFunkos(funkos, rutafunko);
-
-        System.out.println("AÑADIR FUNKO --> 1");
-        System.out.println("ELIMINAR FUNKOS --> 2");
-        System.out.println("MOSTRAR FUNKO MÁS CARO --> 3");
-        System.out.println("MOSTRAR LA MEDIA DE PRECIOS DE LOS FUNKOS --> 4");
-        System.out.println("MOSTRAR TODOS LOS FUNKOS --> 5");
-        System.out.println("MOSTRAR FUNKOS AGRUPADOS POR MODELOS --> 6");
-        int elecusu = sc.nextInt();
-
-        switch (elecusu) {
-            case 1:
-                anadirfunko(funkos, rutafunko);
-                break;
-            case 2:
-                borrarfunko(funkos, rutafunko);
-                break;
-            case 3:
-                mostrarmascaro(funkos, rutafunko);
-                break;
-            case 4:
-                mediapreciosfunkos(funkos, rutafunko);
-                break;
-            case 5:
-                mostrartodosfunkos(funkos, rutafunko);
-                break;
-            case 6:
-                mostrarpormodelos(funkos, rutafunko);
-                break;
-            default:
-                System.out.println("Opción no válida.");
+        while (!compwhile) {
+            System.out.println("AÑADIR FUNKO --> 1");
+            System.out.println("ELIMINAR FUNKOS --> 2");
+            System.out.println("MOSTRAR FUNKO MÁS CARO --> 3");
+            System.out.println("MOSTRAR LA MEDIA DE PRECIOS DE LOS FUNKOS --> 4");
+            System.out.println("MOSTRAR TODOS LOS FUNKOS --> 5");
+            System.out.println("MOSTRAR FUNKOS AGRUPADOS POR MODELOS --> 6");
+            System.out.println("MOSTRAR FUNKOS DEL 2023 --> 7");
+            System.out.println("SALIR --> 8");
+            int elecusu = sc.nextInt();
+            switch (elecusu) {
+                case 1:
+                    anadirfunko(funkos, rutafunko);
+                    break;
+                case 2:
+                    borrarfunko(funkos, rutafunko);
+                    break;
+                case 3:
+                    mostrarmascaro(funkos, rutafunko);
+                    break;
+                case 4:
+                    mediapreciosfunkos(funkos, rutafunko);
+                    break;
+                case 5:
+                    mostrartodosfunkos(funkos, rutafunko);
+                    break;
+                case 6:
+                    mostrarpormodelos(funkos, rutafunko);
+                    break;
+                case 7:
+                    mostrar2023(rutafunko);
+                    break;
+                case 8:
+                    compwhile = true;
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+            }
         }
     }
-
     public static void anadirfunko(List<Funko> funkos, String rutafunko) {
         Scanner sc = new Scanner(System.in);
         System.out.println("INTRODUCE EL CÓDIGO");
@@ -117,9 +125,8 @@ public class MainFunko {
         }
     }
 
-    public static void mostrarpormodelos(List<Funko> funkos, String rutafunko) {
+    public static void mostrarpormodelos(List<Funko> funkos, String rutafunko){
         loadFunkos(funkos, rutafunko);
-
         Map<String, List<Funko>> porModelo = new HashMap<>();
 
         for (Funko funko : funkos) {
@@ -131,14 +138,39 @@ public class MainFunko {
 
             porModelo.get(modelo).add(funko); //añadimos a la lista perteneciente a ese modelo el funko
         }
-
         for (String modelo : porModelo.keySet()) { //muestra todas las claves del hashmap osea los modelos
             System.out.println("MODELO: " + modelo);
             for (Funko f : porModelo.get(modelo)) { //Accede a la lista de Funkos que pertenecen a ese modelo y la recorre uno por uno.
                 System.out.println(f);
             }
         }
+    }
 
+    public static void mostrar2023(String rutafunko){
+        List<Funko> funkosmodernos = new ArrayList<>();
+        try {
+            List<String> lineas = Files.readAllLines(Path.of(rutafunko));
+            for (int i = 1; i < lineas.size(); i++) {
+                String[] datos = lineas.get(i).split(",");
+                if (datos.length == 5) {
+                    String codigo = datos[0];
+                    String nombre = datos[1];
+                    String modelo = datos[2];
+                    double precio = Double.parseDouble(datos[3]);
+                    String fecha = datos[4];
+
+                    if (fecha.contains("2023")){
+                        Funko funkousu = new Funko(codigo, precio, modelo, nombre, fecha);
+                        funkosmodernos.add(funkousu);
+                    }
+                }
+            }
+            for (Funko funkito : funkosmodernos) {
+                System.out.println(funkito.toString());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
