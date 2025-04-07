@@ -9,11 +9,10 @@ public class MainFunkoSerializado implements Serializable {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String rutabinaria = "C:\\Users\\Usuario\\IdeaProjects\\FICHEROSJAVA\\Documentos\\funkos.dat";
-        String rutafunko = "C:\\Users\\Usuario\\IdeaProjects\\FICHEROSJAVA\\Documentos\\funkos.csv";  // Ruta del archivo CSV
+        String rutabinaria = "Documentos/funkos.dat";
+        String rutafunko = "Documentos/funkos.csv";  // Ruta del archivo CSV
         List<Funko> funkos = new ArrayList<>();
         boolean compwhile = false;
-
         loadFunkos(funkos, rutafunko);
         while (!compwhile) {
             System.out.println("AÑADIR FUNKO --> 1");
@@ -49,6 +48,7 @@ public class MainFunkoSerializado implements Serializable {
                     break;
                 case 8:
                     compwhile = true;
+                    guardarbinario(funkos, rutabinaria);
                     break;
                 default:
                     System.out.println("Opción no válida.");
@@ -72,8 +72,6 @@ public class MainFunkoSerializado implements Serializable {
         Funko funkousu = new Funko(codigousu, preciousu, modelousu, nombreusu, fechausu);
         funkos.add(funkousu);
 
-        //guardar en el dat los funkos
-        guardarbinario(funkos, rutabinaria);
     }
 
 
@@ -83,7 +81,6 @@ public class MainFunkoSerializado implements Serializable {
         String codigo = sc.next();
 
         funkos.removeIf(f -> f.getCod().equals(codigo));
-        guardarbinario(funkos, rutabinaria);
     }
 
     public static void mostrarmascaro(List<Funko> funkos, String rutafunko) {
